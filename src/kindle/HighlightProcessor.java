@@ -108,7 +108,7 @@ public class HighlightProcessor {
             bookName = "Unknown Book";
         }
 
-        return bookName;
+        return bookName.trim();
     }
 
     /**
@@ -135,6 +135,6 @@ public class HighlightProcessor {
             }
         }
 
-        return authorName;
+        return authorName.trim();
     }
 }

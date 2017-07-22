@@ -7,13 +7,14 @@
 <title>Kindle Highlights Manager - Beta</title>
 </head>
 <body>
-    <script src='resources/jquery-3.2.1.min.js'></script>
-    <script src='scripts/script.js'></script>
-    <h2 class="home-heading"></h2>
+    <script src="resources/jquery-3.2.1.min.js"></script>
+    <script src="scripts/script.js"></script>
+    <h2 class="home-heading">Failed loading JavaScript</h2>
     <ul>
         <li><a href="home">Home</a></li>
         <li><a href="login">Login</a></li>
-        <li><a href="productList">Product List</a>
     </ul>
+    <div class="hightlight-container">
+    </div>
 </body>
 </html>

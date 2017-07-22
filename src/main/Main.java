@@ -2,6 +2,7 @@ package main;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import kindle.Highlight;
 import kindle.HighlightProcessor;
@@ -13,9 +14,16 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
+        // compatible with command line call
+        BufferedReader bufferedReader = FileProcessor.fileInitializer("Clippings_.txt");
+        String result = Main.execute(bufferedReader);
+    }
+
+    public static String execute(BufferedReader bufferedReader) {
+        String result = null;
+
         // read the text file
         ArrayList<String> fileContentCollection = null;
-        BufferedReader bufferedReader = FileProcessor.fileInitializer("Clippings.txt");
 
         // convert the raw content to an array list
         if (bufferedReader != null) {
@@ -25,8 +33,12 @@ public class Main {
 
         if (!fileContentCollection.isEmpty()) {
             HighlightProcessor highlightProcessor = new HighlightProcessor();
-            ArrayList<Highlight> hightlight = highlightProcessor.highlightsProcesser(fileContentCollection);
+            List<Highlight> hightlight = new ArrayList<Highlight>();
+            hightlight = highlightProcessor.highlightsProcesser(fileContentCollection);
+            result = com.alibaba.fastjson.JSON.toJSONString(hightlight);
         }
+
+        return result;
     }
 
 }
