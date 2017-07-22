@@ -54,4 +54,19 @@ public class FileProcessor {
         return contentCollection;
     }
 
+    /**
+     * @param p_fileName
+     * @return fileExtension
+     */
+    public static String checkFileExtension(String p_fileName) {
+        String fileExtension = null;
+
+        if (p_fileName != null || p_fileName != "") {
+            String fileName = p_fileName.substring(p_fileName.lastIndexOf("/"));
+            fileExtension = fileName.substring(fileName.indexOf("."));
+        }
+
+        return fileExtension;
+    }
+
 }

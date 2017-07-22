@@ -6,6 +6,7 @@ package kindle;
  */
 public class Highlight {
     String bookName;
+    String authorName;
     int pageNumber;
     String highlightContent;
 

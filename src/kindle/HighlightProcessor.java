@@ -29,7 +29,8 @@ public class HighlightProcessor {
                 if (!line.equals(HILIGHT_SEPARATOR)) {
                     if (state == 0 && !line.isEmpty()) {
                         singleHighlight = new Highlight();
-                        singleHighlight.bookName = line;
+                        singleHighlight.bookName = HighlightProcessor.getBookName(line);
+                        singleHighlight.authorName = HighlightProcessor.getAuthorName(line);
                         state++;
                     } else if (state == 1 && !line.isEmpty()) {
                         singleHighlight.pageNumber = HighlightProcessor.getPageNumber(line);
@@ -86,5 +87,54 @@ public class HighlightProcessor {
         String dateTime = null;
         // TODO: implement this
         return dateTime;
+    }
+
+    /**
+     * Extract the book name of the clipping
+     * 
+     * @param p_currentLine
+     * @return
+     */
+    public static String getBookName(String p_currentLine) {
+        String bookName = null;
+
+        if (p_currentLine != null && !p_currentLine.isEmpty()) {
+            try {
+                bookName = p_currentLine.substring(0, p_currentLine.lastIndexOf("(") - 1);
+            } catch (StringIndexOutOfBoundsException ex) {
+                bookName = p_currentLine;
+            }
+        } else {
+            bookName = "Unknown Book";
+        }
+
+        return bookName;
+    }
+
+    /**
+     * Extract the author name of the clipping
+     * 
+     * @param p_currentLine
+     * @return
+     */
+    public static String getAuthorName(String p_currentLine) {
+        String authorSection = null;
+        String authorName = null;
+
+        if (p_currentLine != null && !p_currentLine.isEmpty()) {
+            try {
+                authorSection = p_currentLine.substring(p_currentLine.lastIndexOf("("));
+            } catch (StringIndexOutOfBoundsException ex) {
+                authorSection = null;
+            }
+
+            if (authorSection != null) {
+                authorName = authorSection.substring(1, authorSection.length() - 1);
+            } else {
+                authorName = "Unknown, Author";
+            }
+        }
+
+        return authorName;
     }
 }
