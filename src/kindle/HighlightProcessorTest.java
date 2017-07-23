@@ -72,4 +72,18 @@ public class HighlightProcessorTest {
         result = HighlightProcessor.getBookName(input);
         assertEquals("Unknown Book", result);
     }
+
+    @Test
+    public void testGetCapturedDate() {
+        String input;
+        String result;
+
+        input = "- Your Highlight on page 373 | location 5579-5580 | Added on Friday, 14 April 2017 09:26:18";
+        result = HighlightProcessor.getCapturedDate(input);
+        assertEquals("Friday, 14 April 2017 09:26:18", result);
+
+        input = null;
+        result = HighlightProcessor.getCapturedDate(input);
+        assertEquals("Unknown Date", result);
+    }
 }

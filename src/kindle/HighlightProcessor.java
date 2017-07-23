@@ -1,6 +1,9 @@
 package kindle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author yang.xia
@@ -15,12 +18,13 @@ public class HighlightProcessor {
     /**
      * @param p_highlights
      */
-    public ArrayList<Highlight> highlightsProcesser(ArrayList<String> p_highlights) {
+    public Map<String, List<Highlight>> highlightsProcesser(ArrayList<String> p_highlights) {
         // 0 - author; 1 - page info; 2 - content
         int state = 0;
 
-        ArrayList<Highlight> highlightCollection = new ArrayList<Highlight>();
+        Map<String, List<Highlight>> highlightCollection = new HashMap<String, List<Highlight>>();
         ArrayList<String> processedHighlights = p_highlights;
+        List<Highlight> tempHighlightArray = new ArrayList<Highlight>();
         Highlight singleHighlight = null;
 
         if (!processedHighlights.isEmpty()) {
@@ -34,12 +38,23 @@ public class HighlightProcessor {
                         state++;
                     } else if (state == 1 && !line.isEmpty()) {
                         singleHighlight.pageNumber = HighlightProcessor.getPageNumber(line);
+                        singleHighlight.highlightDate = HighlightProcessor.getCapturedDate(line);
                         state++;
                     } else if (state == 2 && !line.isEmpty()) {
                         singleHighlight.highlightContent = line;
                         state = 0;
-                        highlightCollection.add(singleHighlight);
-                        singleHighlight = null;
+                    }
+
+                    if (state == 0) {
+                        // if we don't have this book yet, then create and store the new list
+                        if (!highlightCollection.containsKey(singleHighlight.bookName)) {
+                            tempHighlightArray = new ArrayList<Highlight>();
+                        } else {
+                            tempHighlightArray = highlightCollection.get(singleHighlight.bookName);
+                        }
+
+                        tempHighlightArray.add(singleHighlight);
+                        highlightCollection.put(singleHighlight.bookName, tempHighlightArray);
                     }
                 }
             }
@@ -55,6 +70,7 @@ public class HighlightProcessor {
     public static int getPageNumber(String p_currentLine) {
         String pageNumber = null;
         String rawPageNumber = null;
+        int parsedResult = 0;
 
         if (p_currentLine.contains(HILIGHT_PAGE_SIGNAL)) {
             String[] splitString = p_currentLine.split("\\|");
@@ -74,18 +90,41 @@ public class HighlightProcessor {
             }
         }
 
-        return Integer.parseInt(pageNumber.trim());
+        try {
+            parsedResult = Integer.parseInt(pageNumber.trim());
+        } catch (Exception ex) {
+            // ex.printStackTrace();
+        }
+
+        return parsedResult;
     }
 
     /**
      * Extract the date and time of the clipping
      * 
      * @param p_currentLine
-     * @return
+     * @return dateTime
      */
     public static String getCapturedDate(String p_currentLine) {
         String dateTime = null;
-        // TODO: implement this
+        String rawCapturedDate = null;
+
+        if (p_currentLine != null && !p_currentLine.isEmpty() && p_currentLine.contains(HILIGHT_DATETIME_SIGNAL)) {
+            String[] splitString = p_currentLine.split("\\|");
+
+            if (splitString != null && splitString.length == 3) {
+                rawCapturedDate = splitString[2];
+            }
+
+            if (rawCapturedDate != null && rawCapturedDate.contains("day")) {
+                dateTime = rawCapturedDate.substring(
+                        rawCapturedDate.indexOf(HILIGHT_DATETIME_SIGNAL) + HILIGHT_DATETIME_SIGNAL.length(),
+                        rawCapturedDate.length());
+            }
+        } else {
+            dateTime = "Unknown Date";
+        }
+
         return dateTime;
     }
 
@@ -135,6 +174,10 @@ public class HighlightProcessor {
             }
         }
 
-        return authorName.trim();
+        if (authorName != null && !authorName.isEmpty()) {
+            authorName = authorName.trim();
+        }
+
+        return authorName;
     }
 }

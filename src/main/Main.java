@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import kindle.Highlight;
 import kindle.HighlightProcessor;
@@ -33,9 +34,9 @@ public class Main {
 
         if (!fileContentCollection.isEmpty()) {
             HighlightProcessor highlightProcessor = new HighlightProcessor();
-            List<Highlight> hightlight = new ArrayList<Highlight>();
-            hightlight = highlightProcessor.highlightsProcesser(fileContentCollection);
-            result = com.alibaba.fastjson.JSON.toJSONString(hightlight);
+            Map<String, List<Highlight>> fancyHighlight = highlightProcessor.highlightsProcesser(fileContentCollection);
+            result = com.alibaba.fastjson.JSON.toJSONString(fancyHighlight);
+
         }
 
         return result;
