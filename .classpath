@@ -5,7 +5,9 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/Users/yang.xia/Developer/Utilities/apache-tomcat-8.5.16/lib/servlet-api.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/yang.xia/Developer/Utilities/fastjson-1.2.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/yang.xia/Developer/Utilities/fastjson-1.2.37.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/yang.xia/Developer/Utilities/apache-tomcat-8.5.20/lib/servlet-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/yang.xia/Developer/Utilities/apache-log4j-2.8.2-bin/log4j-core-2.8.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/yang.xia/Developer/Utilities/apache-log4j-2.8.2-bin/log4j-api-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

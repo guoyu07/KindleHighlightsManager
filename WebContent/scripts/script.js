@@ -9,6 +9,11 @@
      */
     function init() {
         $(".home-heading").html("Kindle Highlights Manager");
+
+        $("#highlight-file").change(function() {
+            $('#file-selection-form').submit();
+        });
+
         processHighlight();
     }
 
@@ -18,14 +23,13 @@
                 var processedBookName = generateDomClassName(bookname);
                 renderHeading(processedBookName, bookname);
                 for (var bookinfo in response[bookname]) {
-                    renderHighlight(processedBookName, "author", response[bookname][bookinfo].author);
-                    renderHighlight(processedBookName, "pagenum", response[bookname][bookinfo].pagenum);
-                    renderHighlight(processedBookName, "date", response[bookname][bookinfo].date);
+                    // renderHighlight(processedBookName, "author", response[bookname][bookinfo].author);
+                    // renderHighlight(processedBookName, "pagenum", response[bookname][bookinfo].pagenum);
+                    // renderHighlight(processedBookName, "date", response[bookname][bookinfo].date);
                     renderHighlight(processedBookName, "content", response[bookname][bookinfo].content);
                 }
             }
         });
-
     }
 
     /**
@@ -36,10 +40,12 @@
      * @param {String} p_payload - the content to be inserted
      */
     function renderHighlight(p_headClassName, p_targetClassName, p_payload) {
-        $("<div/>", {
+        var hightlightToBeAdded = $("<div/>", {
             "class": "highlight-" + p_targetClassName,
             text: p_payload,
-        }).appendTo(".h-heading-" + p_headClassName); // change this to after
+        })
+
+        $(".h-heading-" + p_headClassName).after(hightlightToBeAdded);
     }
 
     /**
@@ -49,7 +55,7 @@
      * @param {String} p_bookName - the actual content of the heading
      */
     function renderHeading(p_targetClassName, p_bookName) {
-        $("<h4/>", {
+        $("<h3/>", {
             "class": "h-heading-" + p_targetClassName,
             text: p_bookName,
         }).appendTo(".hightlight-container");

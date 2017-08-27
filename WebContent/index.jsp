@@ -10,10 +10,12 @@
     <script src="resources/jquery-3.2.1.min.js"></script>
     <script src="scripts/script.js"></script>
     <h2 class="home-heading">Failed loading JavaScript</h2>
-    <ul>
-        <li><a href="home">Home</a></li>
-        <li><a href="login">Login</a></li>
-    </ul>
+    <div class="file-selection">
+    	    <h3>Please select your file</h3>
+    	    <form id="file-selection-form">
+            <input type="file" id="highlight-file">
+    	    </form>
+    </div>
     <div class="hightlight-container">
     </div>
 </body>
