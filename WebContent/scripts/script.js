@@ -5,31 +5,44 @@
 
     /**
      * Initialize the page: render title and book highlight content
-     *
+     * 
      */
     function init() {
         $(".home-heading").html("Kindle Highlights Manager");
 
-        $("#highlight-file").change(function() {
-            $('#file-selection-form').submit();
+        $("#upload-form").submit(function(e) {
+            var file = new FormData(this);
+            $.ajax({
+                type : "POST",
+                url : "UploadServlet",
+                data : file,
+                processData : false,
+                contentType : false,
+                success : function(data) {
+                    processHighlight(data);
+                }
+            });
+            e.preventDefault();
         });
-
-        processHighlight();
     }
 
-    function processHighlight() {
-        $.get("PageHandler", function(response, status) {
-            for (var bookname in response) {
-                var processedBookName = generateDomClassName(bookname);
-                renderHeading(processedBookName, bookname);
-                for (var bookinfo in response[bookname]) {
-                    // renderHighlight(processedBookName, "author", response[bookname][bookinfo].author);
-                    // renderHighlight(processedBookName, "pagenum", response[bookname][bookinfo].pagenum);
-                    // renderHighlight(processedBookName, "date", response[bookname][bookinfo].date);
-                    renderHighlight(processedBookName, "content", response[bookname][bookinfo].content);
-                }
+    /**
+     * Pass through raw response and process one by one
+     *
+     * @param {String} p_data - the raw response from POST response
+     */
+    function processHighlight(p_data) {
+        for (var bookname in p_data) {
+            console.log(bookname);
+            var processedBookName = generateDomClassName(bookname);
+            renderHeading(processedBookName, bookname);
+            for (var bookinfo in p_data[bookname]) {
+                // renderHighlight(processedBookName, "author", p_data[bookname][bookinfo].author);
+                // renderHighlight(processedBookName, "pagenum", p_data[bookname][bookinfo].pagenum);
+                // renderHighlight(processedBookName, "date", p_data[bookname][bookinfo].date);
+                renderHighlight(processedBookName, "content", p_data[bookname][bookinfo].content);
             }
-        });
+        }
     }
 
     /**
