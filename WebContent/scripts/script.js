@@ -20,9 +20,17 @@
                 contentType: false,
                 success: function(response, textStatus, jqXHR) {
                     processHighlight(response);
+                    $("#process-highlights").hide();
+                    $("#clear-highlights").show();
                 }
             });
             e.preventDefault();
+        });
+
+        $("#clear-highlights").click(function(e) {
+            $(".hightlight-container").empty();
+            $("#clear-highlights").hide();
+            $("#process-highlights").show();
         });
     }
 
