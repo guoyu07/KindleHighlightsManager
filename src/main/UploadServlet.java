@@ -2,15 +2,16 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import utility.FileProcessor;
 
 /**
  * Servlet implementation class UploadServlet
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/UploadServlet")
 public class UploadServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    ServletContext servletContext = null;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -44,16 +46,10 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
+        ServletContext servletContext = this.getServletConfig().getServletContext();
 
-        BufferedReader bufferedReader = null;
         PrintWriter out = response.getWriter();
-        InputStream inputStream = request.getInputStream();
-
-        if (inputStream != null) {
-            InputStreamReader isr = new InputStreamReader(inputStream);
-            bufferedReader = new BufferedReader(isr);
-        }
-
+        BufferedReader bufferedReader = FileProcessor.servletRequestToBufferedReader(request, servletContext);
         String json = Main.execute(bufferedReader);
         out.print(json);
         out.flush();

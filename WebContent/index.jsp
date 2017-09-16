@@ -15,7 +15,7 @@
     <div class="file-selection">
         <!-- file selection and upload area -->
         <h3>Please select your kindle highlight file</h3>
-    	    <form id="upload-form">
+    	    <form id="upload-form" enctype="multipart/form-data">
             <input type="file" name="highlightFile">
             <input type="submit" value="upload"/>
     	    </form>

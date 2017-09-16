@@ -14,11 +14,7 @@ public class Main {
     /**
      * @param args
      */
-    public static void main(String[] args) {
-        // compatible with command line call
-        BufferedReader bufferedReader = FileProcessor.fileInitializer("Clippings_.txt");
-        String result = Main.execute(bufferedReader);
-    }
+    public static void main(String[] args) {}
 
     public static String execute(BufferedReader bufferedReader) {
         String result = null;

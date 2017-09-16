@@ -5,21 +5,21 @@
 
     /**
      * Initialize the page: render title and book highlight content
-     * 
+     *
      */
     function init() {
         $(".home-heading").html("Kindle Highlights Manager");
 
         $("#upload-form").submit(function(e) {
-            var file = new FormData(this);
             $.ajax({
-                type : "POST",
-                url : "UploadServlet",
-                data : file,
-                processData : false,
-                contentType : false,
-                success : function(data) {
-                    processHighlight(data);
+                type: "POST",
+                url: "UploadServlet",
+                cache: false,
+                data: new FormData($('#upload-form')[0]),
+                processData: false,
+                contentType: false,
+                success: function(response, textStatus, jqXHR) {
+                    processHighlight(response);
                 }
             });
             e.preventDefault();
