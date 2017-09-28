@@ -2,8 +2,10 @@ package kindle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author yang.xia
@@ -22,6 +24,7 @@ public class HighlightProcessor {
         // 0 - author; 1 - page info; 2 - content
         int state = 0;
 
+        Set<String> tempContentHolder = new HashSet<String>();
         Map<String, List<Highlight>> highlightCollection = new HashMap<String, List<Highlight>>();
         ArrayList<String> processedHighlights = p_highlights;
         List<Highlight> tempHighlightArray = new ArrayList<Highlight>();
@@ -46,15 +49,18 @@ public class HighlightProcessor {
                     }
 
                     if (state == 0) {
-                        // if we don't have this book yet, then create and store the new list
-                        if (!highlightCollection.containsKey(singleHighlight.bookName)) {
-                            tempHighlightArray = new ArrayList<Highlight>();
-                        } else {
-                            tempHighlightArray = highlightCollection.get(singleHighlight.bookName);
-                        }
+                        if (!tempContentHolder.contains(line)) {
+                            // if we don't have this book yet, then create and store the new list
+                            if (!highlightCollection.containsKey(singleHighlight.bookName)) {
+                                tempHighlightArray = new ArrayList<Highlight>();
+                            } else {
+                                tempHighlightArray = highlightCollection.get(singleHighlight.bookName);
+                            }
 
-                        tempHighlightArray.add(singleHighlight);
-                        highlightCollection.put(singleHighlight.bookName, tempHighlightArray);
+                            tempHighlightArray.add(singleHighlight);
+                            highlightCollection.put(singleHighlight.bookName, tempHighlightArray);
+                            tempContentHolder.add(line);
+                        }
                     }
                 }
             }

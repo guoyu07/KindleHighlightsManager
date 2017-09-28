@@ -104,7 +104,7 @@
      */
     function removeLeadingQuestionMark(p_input) {
         var result = p_input;
-        if (p_input.startsWith("?")) {
+        if (p_input != null && p_input.startsWith("?")) {
             result = result.substr(1);
         }
         return result;

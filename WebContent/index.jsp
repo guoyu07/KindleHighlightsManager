@@ -31,6 +31,8 @@
         	    </form>
         </div>
     </div>
+
+    <!-- The area for highlights to be copied to -->
     <div class="hightlight-container">
     </div>
 </body>
