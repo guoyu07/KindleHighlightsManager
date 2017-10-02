@@ -12,24 +12,28 @@
     <script src="resources/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap.min.js"></script>
     <script src="scripts/script.js"></script>
-    <h2 class="home-heading" style="text-align:center">Failed loading JavaScript</h2>
     
-    <!-- Quick intro container -->
-    <div class="container">
-        <h4>Quick Intro</h4>
-        <p>Simply choose your kindle highlight file, and click "Process" button.</p>
+    <!-- Quick intro with hero image -->
+    <div class="intro-hero-image">
+        <div class="intro-hero-text">
+            <h1 class="home-heading">Failed loading JavaScript</h1>
+            <p>Choose your kindle highlight file, and click "Process" button.</p>
+
+            <!-- file selection and upload area -->
+            <div class="file-selection">
+                <form id="upload-form" enctype="multipart/form-data">
+                    <input type="file" name="highlightFile">
+                    <!-- button area -->
+                    <button id="process-highlights" type="submit" class="btn btn-primary">
+                    <i class="icon-user icon-white"></i>Process
+                    </button>
+                    <button id="clear-highlights" type="button" class="btn btn-primary" style="display: none">Clear</button>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <!-- File selection area -->
     <div class="container">
-        <!-- file selection and upload area -->
-        <div class="file-selection">
-        	    <form id="upload-form" enctype="multipart/form-data">
-                <input type="file" name="highlightFile">
-                <input id="process-highlights" type="submit" class="btn btn-primary" value="Process"/>
-                <button id="clear-highlights" type="button" class="btn btn-primary" style="display: none">Clear</button>
-        	    </form>
-        </div>
         <!-- The area for highlights to be copied to -->
         <div class="hightlight-container-grid">
         </div>
@@ -40,4 +44,8 @@
         <h4>Please choose an option</h4>
     </div>
 </body>
+
+<footer class="home-heading">
+    Failed loading JavaScript
+</footer>
 </html>

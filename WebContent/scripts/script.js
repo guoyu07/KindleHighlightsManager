@@ -45,10 +45,10 @@
             var processedBookName = generateDomClassName(bookname);
             renderHeading(processedBookName, bookname);
             for (var bookinfo in p_data[bookname]) {
-                // renderHighlight(processedBookName, "author", p_data[bookname][bookinfo].author);
                 // renderHighlight(processedBookName, "pagenum", p_data[bookname][bookinfo].pagenum);
                 // renderHighlight(processedBookName, "date", p_data[bookname][bookinfo].date);
                 renderHighlight(processedBookName, "content", p_data[bookname][bookinfo].content);
+                renderHighlight(processedBookName, "author", p_data[bookname][bookinfo].author);
             }
         }
 
@@ -66,15 +66,29 @@
      * @param {String} p_payload - the content to be inserted
      */
     function renderHighlight(p_headClassName, p_targetClassName, p_payload) {
-        if ($(".heading-" + p_headClassName).find(".col-9").length) {
-            $("<p/>", {
-                text: p_payload,
-            }).appendTo($(".heading-" + p_headClassName).find(".col-9"));
-        } else {
-            $("<div/>", {
-                "class": "col-9",
-                text: p_payload,
-            }).appendTo(".heading-" + p_headClassName);
+        // Render the highlight content
+        if (p_targetClassName == 'content') {
+            if ($(".heading-" + p_headClassName).find(".col-9").length) {
+                $("<p/>", {
+                    text: p_payload,
+                }).appendTo($(".heading-" + p_headClassName).find(".col-9"));
+            } else {
+                $("<div/>", {
+                    "class": "col-9",
+                }).appendTo(".heading-" + p_headClassName);
+
+                renderHighlight(p_headClassName, p_targetClassName, p_payload);
+            }
+        }
+        
+        // Render the meta-data of the book
+        if (p_targetClassName == 'author') {
+            if ($(".heading-" + p_headClassName).length && $(".author-" + p_headClassName).length == 0) {
+                $("<p/>", {
+                    class: "author-" + p_headClassName,
+                    text: "(Author: " + p_payload + ")",
+                }).appendTo($(".heading-" + p_headClassName).find(".col"));
+            }
         }
     }
 
