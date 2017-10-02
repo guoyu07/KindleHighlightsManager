@@ -28,14 +28,14 @@
         });
 
         $("#clear-highlights").click(function(e) {
-            $(".hightlight-container").empty();
+            $(".hightlight-container-grid").empty();
             $("#clear-highlights").hide();
             $("#process-highlights").show();
         });
     }
 
     /**
-     * Pass through raw response and process one by one
+     * Pass through raw response payload and process one by one
      *
      * @param {String} p_data - the raw response from POST response
      */
@@ -51,22 +51,31 @@
                 renderHighlight(processedBookName, "content", p_data[bookname][bookinfo].content);
             }
         }
+
+        // Optionally toggle extra functionality
+        if ($(".hightlight-container-grid").text().length > 0) {
+            $(".hightlight-export").show();
+        }
     }
 
     /**
-     * Render the highlight content after the heading
+     * Render the highlight content besides the heading of the grid
      *
      * @param {String} p_headClassName - the target heading class for highlight to append to
      * @param {String} p_targetClassName - the target class for highlight to append to
      * @param {String} p_payload - the content to be inserted
      */
     function renderHighlight(p_headClassName, p_targetClassName, p_payload) {
-        var hightlightToBeAdded = $("<div/>", {
-            "class": "highlight-" + p_targetClassName,
-            text: p_payload,
-        })
-
-        $(".h-heading-" + p_headClassName).after(hightlightToBeAdded);
+        if ($(".heading-" + p_headClassName).find(".col-9").length) {
+            $("<p/>", {
+                text: p_payload,
+            }).appendTo($(".heading-" + p_headClassName).find(".col-9"));
+        } else {
+            $("<div/>", {
+                "class": "col-9",
+                text: p_payload,
+            }).appendTo(".heading-" + p_headClassName);
+        }
     }
 
     /**
@@ -76,10 +85,14 @@
      * @param {String} p_bookName - the actual content of the heading
      */
     function renderHeading(p_targetClassName, p_bookName) {
-        $("<h3/>", {
-            "class": "h-heading-" + p_targetClassName,
-            text: p_bookName,
-        }).appendTo(".hightlight-container");
+        $("<div/>", {
+            "class": "row heading-" + p_targetClassName,
+        }).appendTo(".hightlight-container-grid");
+
+        $("<div/>", {
+            "class": "col",
+            html: "<h5>" + p_bookName + "<h5/>",
+        }).appendTo(".heading-" + p_targetClassName);
     }
 
     /**

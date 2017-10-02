@@ -22,18 +22,22 @@
 
     <!-- File selection area -->
     <div class="container">
+        <!-- file selection and upload area -->
         <div class="file-selection">
-            <!-- file selection and upload area -->
         	    <form id="upload-form" enctype="multipart/form-data">
                 <input type="file" name="highlightFile">
                 <input id="process-highlights" type="submit" class="btn btn-primary" value="Process"/>
                 <button id="clear-highlights" type="button" class="btn btn-primary" style="display: none">Clear</button>
         	    </form>
         </div>
+        <!-- The area for highlights to be copied to -->
+        <div class="hightlight-container-grid">
+        </div>
     </div>
 
-    <!-- The area for highlights to be copied to -->
-    <div class="hightlight-container">
+    <!-- The area for users to export their highlights -->
+    <div class="hightlight-export" style="display: none">
+        <h4>Please choose an option</h4>
     </div>
 </body>
 </html>
