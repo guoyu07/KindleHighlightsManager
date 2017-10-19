@@ -12,10 +12,13 @@ import java.util.Set;
  *
  */
 public class HighlightProcessor {
-    public static final String HILIGHT_PAGE_SIGNAL = "- Your Highlight on page ";
-    public static final String HILIGHT_LOC_SIGNAL = " | location ";
-    public static final String HILIGHT_DATETIME_SIGNAL = " Added on ";
-    public static final String HILIGHT_SEPARATOR = "==========";
+
+    class HighlightSignal {
+        public static final String HILIGHT_PAGE_SIGNAL = "- Your Highlight on page ";
+        public static final String HILIGHT_LOC_SIGNAL = " | location ";
+        public static final String HILIGHT_DATETIME_SIGNAL = " Added on ";
+        public static final String HILIGHT_SEPARATOR = "==========";
+    }
 
     /**
      * @param p_highlights
@@ -33,7 +36,7 @@ public class HighlightProcessor {
         if (!processedHighlights.isEmpty()) {
             for (String line : processedHighlights) {
                 // disregard the separator
-                if (!line.equals(HILIGHT_SEPARATOR)) {
+                if (!HighlightSignal.HILIGHT_SEPARATOR.equals(line)) {
                     if (state == 0 && !line.isEmpty()) {
                         singleHighlight = new Highlight();
                         singleHighlight.bookName = HighlightProcessor.getBookName(line);
@@ -78,28 +81,27 @@ public class HighlightProcessor {
         String rawPageNumber = null;
         int parsedResult = 0;
 
-        if (p_currentLine.contains(HILIGHT_PAGE_SIGNAL)) {
+        if (p_currentLine.contains(HighlightSignal.HILIGHT_PAGE_SIGNAL)) {
             String[] splitString = p_currentLine.split("\\|");
 
             if (splitString != null && splitString.length == 3) {
                 rawPageNumber = splitString[0];
             } else if (splitString.length == 2) {
-                if (!splitString[0].contains(HILIGHT_PAGE_SIGNAL)) {
+                if (!splitString[0].contains(HighlightSignal.HILIGHT_PAGE_SIGNAL)) {
                     System.out.println("=== Warning: No Page number section found ===");
                 }
             }
 
-            if (rawPageNumber != null && rawPageNumber.contains(HILIGHT_PAGE_SIGNAL)) {
-                pageNumber = rawPageNumber.substring(
-                        rawPageNumber.indexOf(HILIGHT_PAGE_SIGNAL) + HILIGHT_PAGE_SIGNAL.length(),
-                        rawPageNumber.length());
-            }
-        }
+            if (rawPageNumber != null && rawPageNumber.contains(HighlightSignal.HILIGHT_PAGE_SIGNAL)) {
+                pageNumber = rawPageNumber.substring(rawPageNumber.indexOf(HighlightSignal.HILIGHT_PAGE_SIGNAL)
+                        + HighlightSignal.HILIGHT_PAGE_SIGNAL.length(), rawPageNumber.length());
 
-        try {
-            parsedResult = Integer.parseInt(pageNumber.trim());
-        } catch (Exception ex) {
-            // ex.printStackTrace();
+                try {
+                    parsedResult = Integer.parseInt(pageNumber.trim());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
 
         return parsedResult;
@@ -115,7 +117,8 @@ public class HighlightProcessor {
         String dateTime = null;
         String rawCapturedDate = null;
 
-        if (p_currentLine != null && !p_currentLine.isEmpty() && p_currentLine.contains(HILIGHT_DATETIME_SIGNAL)) {
+        if (p_currentLine != null && !p_currentLine.isEmpty()
+                && p_currentLine.contains(HighlightSignal.HILIGHT_DATETIME_SIGNAL)) {
             String[] splitString = p_currentLine.split("\\|");
 
             if (splitString != null && splitString.length == 3) {
@@ -123,9 +126,8 @@ public class HighlightProcessor {
             }
 
             if (rawCapturedDate != null && rawCapturedDate.contains("day")) {
-                dateTime = rawCapturedDate.substring(
-                        rawCapturedDate.indexOf(HILIGHT_DATETIME_SIGNAL) + HILIGHT_DATETIME_SIGNAL.length(),
-                        rawCapturedDate.length());
+                dateTime = rawCapturedDate.substring(rawCapturedDate.indexOf(HighlightSignal.HILIGHT_DATETIME_SIGNAL)
+                        + HighlightSignal.HILIGHT_DATETIME_SIGNAL.length(), rawCapturedDate.length());
             }
         } else {
             dateTime = "Unknown Date";

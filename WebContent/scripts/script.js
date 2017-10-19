@@ -11,11 +11,17 @@
         $(".home-heading").html("Kindle Highlights Manager");
 
         $("#upload-form").submit(function(e) {
+            var form = $(this);
+            var formdata = false;
+            if (window.FormData){
+                formdata = new FormData(form[0]);
+            }
+            
             $.ajax({
                 type: "POST",
                 url: "UploadServlet",
                 cache: false,
-                data: new FormData($('#upload-form')[0]),
+                data: formdata ? formdata : form.serialize(),
                 processData: false,
                 contentType: false,
                 success: function(response, textStatus, jqXHR) {

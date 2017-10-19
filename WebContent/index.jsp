@@ -25,7 +25,7 @@
                     <input type="file" name="highlightFile">
                     <!-- button area -->
                     <button id="process-highlights" type="submit" class="btn btn-primary">
-                    <i class="icon-user icon-white"></i>Process
+                        <i class="icon-user icon-white"></i>Process
                     </button>
                     <button id="clear-highlights" type="button" class="btn btn-primary" style="display: none">Clear</button>
                 </form>
