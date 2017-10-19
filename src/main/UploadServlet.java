@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import utility.FileProcessor;
-
 /**
  * Servlet implementation class UploadServlet
  */
@@ -45,14 +43,18 @@ public class UploadServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
+        response.setHeader("Cache-Control", "no-cache");
+
         ServletContext servletContext = this.getServletConfig().getServletContext();
+        request.setCharacterEncoding("utf-8");
 
         PrintWriter out = response.getWriter();
-        BufferedReader bufferedReader = FileProcessor.servletRequestToBufferedReader(request, servletContext);
+        BufferedReader bufferedReader = utility.FileProcessor.servletRequestToBufferedReader(request, servletContext);
         String json = Main.execute(bufferedReader);
         out.print(json);
         out.flush();
+        out.close();
     }
 
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import kindle.Highlight;
 import kindle.HighlightProcessor;
-import utility.FileProcessor;
 
 public class Main {
 
@@ -25,7 +24,7 @@ public class Main {
         // convert the raw content to an array list
         if (bufferedReader != null) {
             fileContentCollection = new ArrayList<String>();
-            fileContentCollection = FileProcessor.fileContentScanner(bufferedReader);
+            fileContentCollection = utility.FileProcessor.fileContentScanner(bufferedReader);
         }
 
         if (!fileContentCollection.isEmpty()) {

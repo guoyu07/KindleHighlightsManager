@@ -37,11 +37,13 @@
         <!-- The area for highlights to be copied to -->
         <div class="hightlight-container-grid">
         </div>
-    </div>
 
-    <!-- The area for users to export their highlights -->
-    <div class="hightlight-export" style="display: none">
-        <h4>Please choose an option</h4>
+        <!-- The area for users to export their highlights -->
+        <div class="hightlight-export" style="display: none">
+            <h5>Please choose an option</h5>
+            <button id="export-cvs" type="button" class="btn btn-primary">Export as CVS</button>
+            <button id="export-pdf" type="button" class="btn btn-primary">Export as PDF</button>
+        </div>
     </div>
 </body>
 
